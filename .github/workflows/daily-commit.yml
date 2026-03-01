@@ -1,0 +1,23 @@
+name: Daily Auto Commit
+
+on:
+  schedule:
+    - cron: '17 4 * * *'   # Daily at 04:17 UTC (fixed time, no wildcards)
+  workflow_dispatch:
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Make Daily Commit - 23f2005517@ds.study.iitm.ac.in
+        run: |
+          echo "Last updated: $(date)" >> daily-log.txt
+          git config user.name "HARSH7988"
+          git config user.email "23f2005517@ds.study.iitm.ac.in"
+          git add daily-log.txt
+          git commit -m "Automated daily commit"
+          git push
