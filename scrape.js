@@ -11,6 +11,9 @@ const { chromium } = require('playwright');
     const url = `https://sanand0.github.io/tdsdata/js_table/?seed=${seed}`;
     await page.goto(url);
 
+    // Wait for table to load
+    await page.waitForSelector("table");
+
     const numbers = await page.$$eval("table td", cells =>
       cells
         .map(td => td.innerText.trim())
@@ -19,6 +22,8 @@ const { chromium } = require('playwright');
     );
 
     const sum = numbers.reduce((a, b) => a + b, 0);
+    console.log(`Seed ${seed} sum:`, sum);
+
     grandTotal += sum;
   }
 
